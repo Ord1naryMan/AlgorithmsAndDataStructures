@@ -1,6 +1,6 @@
 # About
 
-In university I study, we have subject called Algorithms And Data Structures.
+In university where I study, we have subject called Algorithms And Data Structures.
 
 This repo contains all solved tasks i had, with tasks.
 
