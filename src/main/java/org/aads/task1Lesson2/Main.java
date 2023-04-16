@@ -1,18 +1,23 @@
 package org.aads.task1Lesson2;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        Graph g = new Graph();
+        Graph fileGraph1 = new Graph();
 
-        g.add(1, 2);
-        g.add(2, 3);
-        g.add(3, 4);
-        g.add(4, 2);
+        File file1 = Path.of("src", "main", "resources", "task1Lesson2", "test1.graph").toFile();
 
-        List<Integer> nodes = g.findNumberOfPath(3, 5);
+        System.out.println(file1.exists());
+
+        fileGraph1.readFromFile(file1);
+
+
+        System.out.println("First file test:");
+        List<Integer> nodes = fileGraph1.findNumberOfPath(6,2);
         System.out.println(nodes);
     }
 }
