@@ -1,92 +1,50 @@
 package org.aads.task1Lesson2;
 
 import org.junit.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UnitTest {
-    public Graph g;
 
-    @Before
-    public void prepare() {
-        g = new Graph();
+    public static Stream<Arguments> testCasesProvider() {
+        return Stream.of(
+                        //name  supplierMethod,  ansLength, fromNode, pathLen
+          Arguments.of("1", firstExample(new Graph()), 3, 6, 2),
+          Arguments.of("2", secondExample(new Graph()), 4, 8, 6),
+          Arguments.of("3", thirdExample(new Graph()), 4, 7, 6),
+          Arguments.of("4", fourthExample(new Graph()), 12, 16, 4),
+          Arguments.of("5", fifthExample(new Graph()), 0, 1, 1),
+          Arguments.of("7", seventhExample(new Graph()), 1, 2, 1),
+          Arguments.of("8", eighthExample(new Graph()), 1, 2, 5)
+        );
     }
 
-    @Test
-    public void test1() {
-        firstExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(6, 2);
-        assertEquals(3, nodes.size());
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test2() {
-        secondExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(8, 6);
-        assertEquals(4, nodes.size());
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test3() {
-        thirdExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(7, 6);
-        assertEquals(4, nodes.size());
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test4() {
-        fourthExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(16, 14);
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test5() {
-        fifthExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(1, 1);
-        assertEquals(0, nodes.size());
+    @ParameterizedTest(name = "graph_{0}_test")
+    @MethodSource("testCasesProvider")
+    public void testRunner(String name, Graph g, int expected, int fromNode, int pathLen) {
+        List<Integer> nodes = g.findNumberOfPath(fromNode, pathLen);
+        assertEquals(expected, nodes.size());
         System.out.println(nodes);
     }
 
     @Test
     public void test6() {
+        Graph g = new Graph();
         List<Integer> nodes = g.findNumberOfPath(1, 0);
         assertEquals(1, nodes.size());
         System.out.println(nodes);
         nodes = g.findNumberOfPath(1, 1);
         assertEquals(0, nodes.size());
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test7() {
-        seventhExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(2, 1);
-        assertEquals(1, nodes.size());
-        System.out.println(nodes);
-    }
-
-    @Test
-    public void test8() {
-        eighthExample(g);
-
-        List<Integer> nodes = g.findNumberOfPath(2, 5);
-        assertEquals(1, nodes.size());
         System.out.println(nodes);
     }
 
@@ -126,14 +84,12 @@ public class UnitTest {
 
     @Test
     public void toStringTest() {
-        firstExample(g);
-
-        System.out.println(g);
+        System.out.println(firstExample(new Graph()));
     }
 
     @Test
     public void containsPathTest() {
-        secondExample(g);
+        Graph g = secondExample(new Graph());
 
         assertTrue(g.containsPath(1, 8));
         assertTrue(g.containsPath(1, 4));
@@ -144,15 +100,16 @@ public class UnitTest {
         assertTrue(g.containsPath(100, 100));
     }
 
-    public static void firstExample(Graph g) {
+    public static Graph firstExample(Graph g) {
         g.add(1, 2);
         g.add(2, 6);
         g.add(3, 4);
         g.add(4, 6);
         g.add(5, 4);
+        return g;
     }
 
-    public static void secondExample(Graph g) {
+    public static Graph secondExample(Graph g) {
         g.add(1, 3);
         g.add(3, 5);
         g.add(5, 8);
@@ -161,9 +118,10 @@ public class UnitTest {
         g.add(5, 4);
         g.add(6, 5);
         g.add(7, 6);
+        return g;
     }
 
-    public static void thirdExample(Graph g) {
+    public static Graph thirdExample(Graph g) {
         g.add(1, 2);
         g.add(2, 3);
         g.add(1, 3);
@@ -175,9 +133,10 @@ public class UnitTest {
         g.add(6, 10);
         g.add(10, 7);
         g.add(8, 9);
+        return g;
     }
 
-    public static void fourthExample(Graph g) {
+    public static Graph fourthExample(Graph g) {
         g.add(1, 2);
         g.add(2, 3);
         g.add(3, 4);
@@ -211,18 +170,22 @@ public class UnitTest {
         g.add(6, 16);
         g.add(11, 16);
         g.add(15, 16);
+        return g;
     }
 
-    public static void fifthExample(Graph g) {
+    public static Graph fifthExample(Graph g) {
         g.add(1, 2);
+        return g;
     }
 
-    public static void seventhExample(Graph g) {
+    public static Graph seventhExample(Graph g) {
         g.add(1, 2);
+        return g;
     }
 
-    public static void eighthExample(Graph g) {
+    public static Graph eighthExample(Graph g) {
         g.add(1, 2);
         g.add(2, 1);
+        return g;
     }
 }
