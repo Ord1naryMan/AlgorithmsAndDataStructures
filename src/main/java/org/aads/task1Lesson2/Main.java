@@ -4,6 +4,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
+// NOTE ALL  TESTS ARE IN TEST FOLDER
+
 public class Main {
 
     public static void main(String[] args) {
